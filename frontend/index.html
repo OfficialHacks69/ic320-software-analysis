@@ -1,1 +1,94 @@
-<!DOCTYPE html><html><head><title>Frontend</title></head><body><h1>AI Tutor Frontend Placeholder</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IC320 Software Analysis and Modelling Tutor</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light">
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  <h1>📘 IC320 Software Analysis & Modelling Tutor</h1>
+
+  <section>
+    <h2>✅ Chapter 1: Requirements Engineering</h2>
+    <p><strong>Definition:</strong> The process of identifying, documenting, and maintaining requirements for a system.</p>
+    <ul>
+      <li><strong>Functional Requirements:</strong> Specific behavior/functions (e.g., user login)</li>
+      <li><strong>Non-Functional Requirements:</strong> System qualities (e.g., performance, usability)</li>
+      <li><strong>SMART:</strong> Specific, Measurable, Achievable, Relevant, Time-bound</li>
+    </ul>
+    <p><strong>Process includes:</strong> Elicitation, Specification, Validation, and Management</p>
+  </section>
+
+  <section>
+    <h2>✅ Chapter 2: UML & Use Case Diagrams</h2>
+    <p><strong>UML:</strong> Unified Modeling Language used to visualize software system designs.</p>
+    <ul>
+      <li><strong>Actors:</strong> External entities interacting with the system</li>
+      <li><strong>Use Cases:</strong> Functions the system provides</li>
+      <li><strong>Relationships:</strong> <code>&lt;&lt;include&gt;&gt;</code> and <code>&lt;&lt;extend&gt;&gt;</code></li>
+    </ul>
+    <p><strong>Example:</strong> Online shopping system with use cases like Browse Items, Add to Cart, Checkout</p>
+  </section>
+
+  <section>
+    <h2>✅ Chapter 3: Class & Activity Diagrams</h2>
+    <p><strong>Class Diagrams:</strong> Show classes, attributes, methods, and relationships.</p>
+    <ul>
+      <li>Association, Inheritance, Aggregation, Composition</li>
+      <li>Example: Classes - Book, Member, Loan</li>
+    </ul>
+    <p><strong>Activity Diagrams:</strong> Represent workflows including actions and decision points</p>
+    <p>Example: Login → Select → Checkout → Confirm</p>
+  </section>
+
+  <section>
+    <h2>✅ Chapter 4: Sequence & State Diagrams</h2>
+    <p><strong>Sequence Diagrams:</strong> Show object interactions over time with lifelines and messages.</p>
+    <p><strong>State Diagrams:</strong> Represent different states of an object and transitions due to events</p>
+    <p>Example: Document state - Draft → Reviewed → Approved → Archived</p>
+  </section>
+
+  <section>
+    <h2>✅ Chapter 5: From Requirements to Design</h2>
+    <p><strong>Traceability:</strong> Ensures all requirements are mapped to design and testing.</p>
+    <p><strong>Prototyping:</strong> Involves mockups and wireframes using tools like <a href="https://figma.com" target="_blank">Figma</a></p>
+    <p><strong>Architecture:</strong> Layered structure (e.g., Presentation → Logic → Data)</p>
+  </section>
+
+  <section class="ai">
+    <h2>🤖 Ask the AI Tutor</h2>
+    <p>Have doubts? Type your IC320-related questions and get help instantly!</p>
+    <textarea id="user-input" placeholder="e.g., What is a sequence diagram?"></textarea>
+    <button onclick="submitQuestion()">Submit</button>
+    <p id="assistant-response"></p>
+  </section>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark");
+      body.classList.toggle("light");
+    }
+
+    async function submitQuestion() {
+      const input = document.getElementById("user-input").value;
+      const response = document.getElementById("assistant-response");
+
+      try {
+        const res = await fetch("https://ic320-software-analysis-backend.onrender.com/api/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: input })
+        });
+        const data = await res.json();
+        response.textContent = data.answer;
+      } catch (err) {
+        response.textContent = "Error reaching AI Tutor. Please try again later.";
+      }
+    }
+  </script>
+</body>
+</html>
